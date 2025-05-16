@@ -1,6 +1,7 @@
 <template>
   <div class="thread-card">
     <img :src="thread.cover_image" alt="cover image" class="cover" />
+
     <div class="content">
       <h3>{{ thread.title }}</h3>
       <p>{{ truncateContent(thread.content) }}</p>

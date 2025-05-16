@@ -1,25 +1,24 @@
 <template>
-  <div class="thread-detail">
-    <div class="cover-image" :style="{ backgroundImage: `url(${thread.cover_image})` }"></div>
+  <div class="thread-detail" v-if="thread">
+    <!-- 배경 커버 이미지 -->
+    <div class="cover" :style="{ backgroundImage: `url(${thread.cover_image})` }" />
 
-    <div class="content-wrapper">
+    <div class="content">
       <h1 class="title">{{ thread.title }}</h1>
+      <p class="author">작성자: {{ thread.author }}</p>
 
-      <div class="main-content">
-        <!-- 왼쪽: 책 카드 -->
-        <BookCard :book="thread.book" />
+      <!-- 책 정보 -->
+      <BookCard v-if="thread.book" :book="thread.book" />
 
-        <!-- 오른쪽: 게시글 내용 -->
-        <div class="text-content">
-          <p v-html="formattedContent"></p>
-        </div>
-      </div>
+      <!-- 본문 내용 -->
+      <div class="body" v-html="formattedContent"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-import BookCard from '@/components/book/BookCard.vue';
+import { computed } from 'vue';
+import BookCard from '@/components/books/BookCard.vue';
 
 defineProps({
   thread: Object
@@ -32,38 +31,33 @@ const formattedContent = computed(() =>
 
 <style scoped>
 .thread-detail {
-  display: flex;
-  flex-direction: column;
+  padding: 2rem;
   color: #fff;
   background-color: #111;
 }
-
-.cover-image {
+.cover {
   height: 300px;
   background-size: cover;
   background-position: center;
+  border-radius: 10px;
+  margin-bottom: 2rem;
 }
-
-.content-wrapper {
-  padding: 30px 40px;
+.content {
+  max-width: 800px;
+  margin: auto;
 }
-
 .title {
   font-size: 2rem;
-  margin-bottom: 30px;
-  font-weight: bold;
+  margin-bottom: 0.5rem;
 }
-
-.main-content {
-  display: flex;
-  gap: 40px;
+.author {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 1.5rem;
 }
-
-.text-content {
-  flex: 1;
-  white-space: pre-wrap;
+.body {
   line-height: 1.7;
   font-size: 1rem;
-  color: #eee;
+  white-space: pre-wrap;
 }
 </style>

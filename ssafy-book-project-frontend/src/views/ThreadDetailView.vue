@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import ThreadDetail from '@/components/thread/ThreadDetail.vue';
+import ThreadDetail from '@/components/ThreadDetail.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';

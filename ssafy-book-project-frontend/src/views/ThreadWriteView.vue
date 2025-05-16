@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import ThreadForm from '@/components/thread/ThreadForm.vue';
+import ThreadForm from '@/components/ThreadForm.vue';
 const emit = defineEmits(['close', 'submit']);
 defineProps(['visible']);
 
