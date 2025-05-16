@@ -23,8 +23,15 @@ defineProps({
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-}
 
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  list-style: none;
+}
+.thread-list li:hover {
+  background-color: #f9f9f9;
+}
 .thread-link {
   text-decoration: none;
   color: inherit;
