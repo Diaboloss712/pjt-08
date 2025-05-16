@@ -1,11 +1,15 @@
 <template>
-
+  <router-view />
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped>
-
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
 </style>
