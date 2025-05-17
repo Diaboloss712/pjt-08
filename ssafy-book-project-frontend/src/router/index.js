@@ -4,7 +4,9 @@ import BookDetailView from "@/views/BookDetailView.vue";
 import BooksListView from "@/views/BooksListView.vue";
 import LandingView from "@/views/LandingView.vue";
 
-import ThreadListView from '@/views/ThreadListView.vue'; // 병규 오빠가 작업한 threads 에 맞게 수정하면 됩니다
+import ThreadsListView from '@/views/ThreadsListView.vue'
+import ThreadWriteView from '@/views/ThreadWriteView.vue'
+import ThreadDetailView from '@/views/ThreadDetailView.vue'
 
 const routes = [
   {
@@ -25,10 +27,19 @@ const routes = [
   },
   {
     path: '/threads',
-    name: 'Threads',
-    component: ThreadListView, // 병규 오빠가 작업한 컴포넌트로 교체 예정
+    name: 'threadsList',
+    component: ThreadsListView,
   },
-
+  {
+    path: '/threads/:bookId/write',
+    name: 'threadWrite',
+    component: ThreadWriteView,
+  },
+  {
+    path: '/threads/:threadId',
+    name: 'threadDetail',
+    component: ThreadDetailView,
+  },
 ];
 
 const router = createRouter({
