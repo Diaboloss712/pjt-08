@@ -15,6 +15,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios'; // 서버 요청을 위해 axios 사용
+
 const emit = defineEmits(['submit']);
 
 const title = ref('');
@@ -25,25 +27,56 @@ async function handleSubmit() {
   const newThread = {
     title: title.value,
     content: content.value,
-    reading_date: readingDate.value
+    reading_date: readingDate.value,
   };
 
-  // async function submit() {
-  //   try {
-  //     const res = await axios.post('/env와 경로', {
-  //       title: title.value,
-  //       content: content.value,
-  //       reading_date: readingDate.value
-  //     })
-  //     emit('submit', res.data);
-  //   } catch (err){
-  //     console.log(err)
-  //   }
-  // }
-  emit('submit', newThread);
+  try {
+    // 실제 서버에 post 요청
+    const res = await axios.post(
+      import.meta.env.VITE_API_BASE_URL + '/threads', // ✅ 경로는 .env에서 관리
+      newThread
+    );
+
+    // 요청 성공 시 상위 컴포넌트로 전달
+    emit('submit', res.data);
+
+    // 폼 초기화
+    title.value = '';
+    content.value = '';
+    readingDate.value = '';
+  } catch (err) {
+    console.error('스레드 작성 실패:', err);
+    // TODO: 사용자에게 오류 메시지 표시
+  }
 }
 </script>
 
-<style>
+<style scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+}
 
+label {
+  font-weight: bold;
+}
+
+input,
+textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
 </style>

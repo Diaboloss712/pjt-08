@@ -1,18 +1,20 @@
 <template>
-  <ThreadDetail :thread="thread" />
+  <ThreadDetail/>
 </template>
 
 <script setup>
-import ThreadDetail from '@/components/ThreadDetail.vue';
-import { onMounted, ref } from 'vue';
+import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import axios from 'axios';
+import {useThreadStore} from '@/stores/thread';
+import ThreadDetail from '@/components/ThreadDetail.vue';
 
 const route = useRoute();
-const thread = ref(null);
+const threadStore = useThreadStore();
 
-onMounted(async () => {
-  const res = await axios.get(`/api/threads/${route.params.threadId}`);
-  thread.value = res.data;
+onMounted(() => {
+  threadStore.fetchThreadById(route.params.threadId);
 });
 </script>
+
+<style scoped>
+</style>

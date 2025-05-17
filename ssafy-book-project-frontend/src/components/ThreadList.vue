@@ -12,10 +12,12 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
+import { useThreadStore } from '@/stores/thread';
 import ThreadItem from './ThreadItem.vue';
-defineProps({
-  threads: Array
-});
+
+const threadStore = useThreadStore();
+const threads = computed(() => threadStore.threads);
 </script>
 
 <style scoped>

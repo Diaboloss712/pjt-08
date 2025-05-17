@@ -1,49 +1,35 @@
 <template>
   <div>
-    <button @click="threadWrite">스레드 생성</button>
-
-    <ThreadList :threads="threads" />
-
+    <ThreadList v-if="!visible" />
     <ThreadWriteView
       :visible="visible"
-      @close="visible = false"
       @submit="addThread"
+      @close="visible = false"
     />
+    <button @click="visible = true">스레드 작성</button>
   </div>
 </template>
 
 <script setup>
-  import ThreadList from '@/components/ThreadList.vue';
-  import ThreadWriteView from './ThreadWriteView.vue';
-  import {ref} from 'vue';
+import { ref, onMounted } from 'vue';
+import { useThreadStore } from '@/stores/thread';
+import ThreadList from '@/components/ThreadList.vue';
+import ThreadWriteView from './ThreadWriteView.vue';
 
-  const visible = ref(false)
-  const threadWrite = () => {
-    visible.value = !visible.value
-  }
-  const threads = ref([]);
-  const addThread = (newThread) => {
-    threads.value.unshift(newThread)
-  }
+const visible = ref(false);
+const threadStore = useThreadStore();
 
-  // onMounted(async () => {
-  //   const res = await axios.get('env와 경로')
-  //   threads.value = res.data;
-  // })
-  threads.value = [
-    { id: 101, title: '베스트 스레드 1', author: '사용자A', commentCount: 12, book:
-    {
-      id: 2,
-      title: '베스트셀러 2',
-      author: '작가 B',
-      image: 'https://via.placeholder.com/80x100',
-    }
+const threadWrite = () => {
+  visible.value = !visible.value;
+};
 
-    },
-    { id: 102, title: '유용한 팁 공유', author: '사용자B', commentCount: 8 },
-    { id: 103, title: '도서 추천 요청', author: '사용자C', commentCount: 15 },
-  ];
+const submitThread = (newThread) => {
+  threadStore.addThread(newThread);
+};
 
+onMounted(() => {
+  threadStore.fetchThreads(); // 샘플 데이터 로딩
+});
 </script>
 
 <style scoped>
